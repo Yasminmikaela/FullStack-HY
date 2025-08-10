@@ -1,0 +1,83 @@
+# React alkeet - Tiivistelmä
+
+## Vite-työkalu
+ - Luo Projekti:
+  `npm create vite@latest part1 -- --template react`
+  `cd part1`
+  `npm install`
+- Käynnistä sovellus:
+  `npm run dev`
+- Sovellus löytyy osoitteesta:
+  `http://localhost:5173/`
+  
+## Sovelluksen rakenne
+- Kooditiedostot sijaitsevat `src`-kansiossa
+- `main.jsx` renderöi pääkomponentin `App` HTML:n `div#root` -elementtiin:
+  `import ReactDOM from 'react-dom/client'`
+  `import App from './App'`
+  `ReactDOM.createRoot(document.getElementById('root')).render(<App />)`
+- App.jsx sisältää React-komponentin:
+  `const App = () => (`
+  `<div>`
+    `<p>Hello world</p>`
+  `</div>`
+  `)`
+  `export default App // muista aina lisätä App.jsx perään`
+
+## React-komponentit
+- Komponentti on funktio, joka palauttaa JSX:ää 
+  - JSX on XML-tyyppinen laajennus JavaScript-kielen syntaksille.
+  Facebookin alun perin luoma Reactin kanssa käytettäväksi, JSX on otettu käyttöön useissa verkkokehyksissä. 
+- JSX näyttää HTML:ltä, mutta on JavaScriptiä (käännetään React.createElement -kutsuihin)
+- Ym. esimerkki perus rakenteesta "Hello world"
+
+## JSX ja sisältö
+- JSX:ssä JavaScript-koodi upotetaan aaltosulkeisiin {}
+  - #### Esimerkiksi
+  - `const now = new Date()`
+    `return (`
+    ` <p>Hello world, it is {now.toString()}</p>`
+    `)`
+
+## Monen komponentin käyttö
+- Komponentteja voi yhdistellä helposti
+- Ylimmän tason komponentti on yleensä `App`
+  - #### Esimerkiksi
+  - `const Hello = () => <p>Hello world</p>`
+    `const App = () => (`
+    `<div>`
+    `<Hello />`
+    `<Hello />`
+    `</div>`
+    `)`
+
+## Propsit
+- Propsit ovat komponentille välitettävää dataa.
+- Propsit tulevat komponentin funktiolle parametrina:
+  `const Hello = (props) => <p>Hello {props.name}</p>`
+- Käyttö:
+  `<Hello name="Maya" />`
+- Voidaan käyttää useita propseja ja myös JavaScript-lausekkeita aaltosulkeissa `{}`
+
+## Juurielementit ja fragmentit
+- React-komponentin tulee palauttaa **yksi** juurielementti
+- Jos et halua ylimääräisiä `div`-elementtejä, käytä fragmentteja
+- `<>...</>` on fragmentti
+
+## Älä renderöi olioita suoraan
+- Reactissa JSX:n sisällä voi käyttää vain primitiivisiä arvoja eli
+  merkkijonoja, numeroita tai bool-arvoja. **Olioita (Objects)** React
+  ei voi renderöidä suoraan, koska JSX ei osaa esittää olion koko sisältöä
+  näkyvään HTML:ään
+  - #### Esimerkiksi
+  - Jos on olio: `const friend = { name: 'Leevi', age: 4 };`
+    ja syötetään: `<p>{friend}</p>`
+    tulee virheilmoitus: **Objects are not valid as a React child**
+  - React:iin pitää syöttää, mitkä olion osat halutaan näyttää, esim:
+    `<p>{friend.name} {friend.age}</p>`
+    Tällöin React renderöi tekstit `"Leevi"` ja `"4"` peräkkäin
+
+    
+## Debuggaus
+- Pidä selaimen konsoli auki koko ajan
+- Käytä console.log -komentoja apuna virheiden löytämiseen.
